@@ -94,23 +94,10 @@ Ext.define('CustomApp', {
                     console.log('this._punish',this._punish);
                 }
                 this._numberOfRounds--;
-		//for the separate post round function:
 		if (this._numberOfRounds==0) {
 		    this._postRoundActions();
 		}
 	}
-            //post round:
-	    //decided to make a seperate function out of it
-	    /*
-            else if (this._numberOfRounds==0) {
-                    console.log("round is over");
-                    this.down('#playButton').setDisabled(false);
-                    this.down('#keepGoingButton').setDisabled(true);
-                    this.down('#swerveButton').setDisabled(true);
-                    console.log('this._myMovesArray', this._myMovesArray);
-                    console.log('this._opponentsMovesArray', this._opponentsMovesArray);
-                    this._saveResults();    
-                }*/
     },
     
     _postRoundActions:function(){
@@ -177,20 +164,6 @@ Ext.define('CustomApp', {
 	this._makeChart();
         
     },
-    //decided to destroy pre-existing chart if 'play' button is clicked
-    /*
-     _updateChart: function(){
-        if (!this.down("#chart")) {
-           console.log('chart does not exist');
-           this._makeChart();
-       }
-       else{
-            console.log('chart exists');
-            this.down("#chart").removeAll(); //not enough. series and data has to be emptied in the next two lines
-            this._makeChart();
-       }
-    },*/
-    
         _makeChart:function(){
         console.log('make chart');
         this.add(
