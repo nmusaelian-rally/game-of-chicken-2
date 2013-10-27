@@ -171,8 +171,7 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    //this._carPanel.add(this._redCar);
-	    //this._carPanel.add(this._blueCar);
+
             
 	    
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'keep going'))
@@ -207,8 +206,6 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	   // this._carPanel.add(this._redCar);
-	    //this._carPanel.add(this._blueCar);
 	    
 	    
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'swerve'))
@@ -243,8 +240,6 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    //this._carPanel.add(this._redCar);
-	    //this._carPanel.add(this._blueCar);
 	    
 	    
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'swerve'))
@@ -279,8 +274,6 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    //this._carPanel.add(this._redCar);
-	    //this._carPanel.add(this._blueCar);
 	    
 	    
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'keep going'))
@@ -294,8 +287,8 @@ Ext.define('CustomApp', {
         this.down('#swerveButton').setDisabled(true);
         console.log('this._myMovesArray', this._myMovesArray);
         console.log('this._opponentsMovesArray', this._opponentsMovesArray);
-	this._carPanel.hide();
-	this._carPanel.hide();
+	//this._carPanel.hide();   //bug- last round is not illustrated by the animation
+	//this._carPanel.hide();
         this._saveResults();  
     },
     _saveResults:function(){
