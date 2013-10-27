@@ -3,7 +3,37 @@ Ext.define('CustomApp', {
     componentCls: 'app',
 
     launch: function() {
-        var that = this;
+       var that = this;
+       this._redCar = Ext.create('Ext.panel.Panel',{
+	width: 121,
+	height: 160,
+	itemId: 'red',  
+	//style: 'border: 1px solid red;',
+	items: [{               
+	    xtype: 'image',
+	    src: 'https://rally1.rallydev.com/slm/attachment/14893222663/red.png'
+	    }
+	]
+    });
+    
+    this._blueCar = Ext.create('Ext.panel.Panel',{
+	width: 116,
+	height: 150,
+	itemId: 'blue',  
+	//style: 'border: 1px solid blue;',
+	items: [{               
+	    xtype: 'image',
+	    src: 'https://rally1.rallydev.com/slm/attachment/14893223025/blue.png'
+	    }
+	]
+    });
+    this._carPanel = Ext.create('Ext.panel.Panel',{
+		layout: 'hbox',
+		height: 200,
+		itemId: 'carPanel',
+		style: 'border: 1px solid blue;',
+	    });
+   this.add(this._carPanel);
        var container = Ext.create('Ext.Container', {
             items: [
                 {
@@ -68,16 +98,20 @@ Ext.define('CustomApp', {
     
     _move: function(move){
         if (this._numberOfRounds>0) {
-            
                 //the other player's move
+		var opponentsMove = '';
                 if (this._punish === true) {
-                    this._opponentsMovesArray.push('keep going');
+		    opponentsMove = 'keep going';
+                    //this._opponentsMovesArray.push('keep going');
+		    //this._opponentsMovesArray.push(opponentsMove);
                 }
                 else{
                     var keepGoingOrSwerve = ['keep going','swerve','swerve','swerve','swerve'];
                     var i = Math.floor(Math.random()*keepGoingOrSwerve.length);
-                    this._opponentsMovesArray.push(keepGoingOrSwerve[i]);   
+		    opponentsMove = keepGoingOrSwerve[i];
+                    //this._opponentsMovesArray.push(keepGoingOrSwerve[i]);   
                 }
+		this._opponentsMovesArray.push(opponentsMove);
                 console.log("this._opponentsMovesArray",this._opponentsMovesArray);
                 
                 
@@ -94,10 +128,154 @@ Ext.define('CustomApp', {
                     console.log('this._punish',this._punish);
                 }
                 this._numberOfRounds--;
+		this._animate(opponentsMove, move);
 		if (this._numberOfRounds==0) {
 		    this._postRoundActions();
 		}
 	}
+    },
+    _animate:function(opponentsMove, yourMove){
+	var that = this;
+	console.log('animating...');
+	console.log(opponentsMove, yourMove);
+	
+	if ((opponentsMove === 'swerve') && (yourMove === 'keep going')) {
+	    var redCarKeepGoing = Ext.create('Ext.fx.Animator', {
+		target: this._redCar,
+		keyframes: {
+		    '0%': {
+			x:20,
+			y:60
+		    },
+		    '100%': {
+			x: 650,
+			y:60
+		    }
+		}
+	    });
+	
+	    var blueCarSwerve = Ext.create('Ext.fx.Animator', {
+	       target: this._blueCar,
+		x: 1000,
+		y: 60,
+		keyframes: {
+		    '0%': {
+			x:1000,
+			y:60
+		    },
+		    '50%': {
+			x: 550,
+			y: 110
+		    }
+		}
+	    });
+	    this._carPanel.add(this._redCar);
+	    this._carPanel.add(this._blueCar);
+
+	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'keep going'))
+	
+	else if ((opponentsMove === 'keep going') && (yourMove === 'swerve')) {
+	    var redCarSwerve = Ext.create('Ext.fx.Animator', {
+		target: this._redCar,
+		keyframes: {
+		    '0%': {
+			x:20,
+			y:60
+		    },
+		    '100%': {
+			x: 650,
+			y:10
+		    }
+		}
+	    });
+	
+	    var blueCarKeepGoing = Ext.create('Ext.fx.Animator', {
+	       target: this._blueCar,
+		x: 1000,
+		y: 60,
+		keyframes: {
+		    '0%': {
+			x:1000,
+			y:60
+		    },
+		    '50%': {
+			x: 550,
+			y: 60
+		    }
+		}
+	    });
+	    this._carPanel.add(this._redCar);
+	    this._carPanel.add(this._blueCar);
+	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'swerve'))
+	
+	else if ((opponentsMove === 'swerve') && (yourMove === 'swerve')) {
+	    var redCarSwerve = Ext.create('Ext.fx.Animator', {
+		target: this._redCar,
+		keyframes: {
+		    '0%': {
+			x:20,
+			y:60
+		    },
+		    '100%': {
+			x: 650,
+			y:10
+		    }
+		}
+	    });
+	
+	    var blueCarSwerve = Ext.create('Ext.fx.Animator', {
+	       target: this._blueCar,
+		x: 1000,
+		y: 60,
+		keyframes: {
+		    '0%': {
+			x:1000,
+			y:60
+		    },
+		    '50%': {
+			x: 550,
+			y: 110
+		    }
+		}
+	    });
+	    this._carPanel.add(this._redCar);
+	    this._carPanel.add(this._blueCar);
+	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'swerve'))
+	
+	else if ((opponentsMove === 'keep going') && (yourMove === 'keep going')) {
+	    var redCarKeepGoing = Ext.create('Ext.fx.Animator', {
+		target: this._redCar,
+		keyframes: {
+		    '0%': {
+			x:20,
+			y:60
+		    },
+		    '100%': {
+			x: 650,
+			y:60
+		    }
+		}
+	    });
+	
+	    var blueCarKeepGoing = Ext.create('Ext.fx.Animator', {
+	       target: this._blueCar,
+		x: 1000,
+		y: 60,
+		keyframes: {
+		    '0%': {
+			x:1000,
+			y:60
+		    },
+		    '50%': {
+			x: 550,
+			y: 60
+		    }
+		}
+	    });
+	    this._carPanel.add(this._redCar);
+	    this._carPanel.add(this._blueCar);
+	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'keep going'))
+	
     },
     
     _postRoundActions:function(){
