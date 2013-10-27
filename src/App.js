@@ -4,6 +4,7 @@ Ext.define('CustomApp', {
 
     launch: function() {
        var that = this;
+       /*
        this._redCar = Ext.create('Ext.panel.Panel',{
 	width: 121,
 	height: 160,
@@ -11,11 +12,13 @@ Ext.define('CustomApp', {
 	//style: 'border: 1px solid red;',
 	items: [{               
 	    xtype: 'image',
-	    src: 'https://rally1.rallydev.com/slm/attachment/14893222663/red.png'
+	    src: 'https://rally1.rallydev.com/slm/attachment/14901040859/red.png'
 	    }
 	]
     });
-    
+    */
+       
+    /*
     this._blueCar = Ext.create('Ext.panel.Panel',{
 	width: 116,
 	height: 150,
@@ -23,15 +26,35 @@ Ext.define('CustomApp', {
 	//style: 'border: 1px solid blue;',
 	items: [{               
 	    xtype: 'image',
-	    src: 'https://rally1.rallydev.com/slm/attachment/14893223025/blue.png'
+	    src: 'https://rally1.rallydev.com/slm/attachment/14900851159/blue.png'
 	    }
 	]
     });
+    */
+    
+    this._redCar = Ext.create('Ext.Img', {
+	src: 'https://rally1.rallydev.com/slm/attachment/14901040859/red.png'
+    });
+
+   this._blueCar = Ext.create('Ext.Img', {
+	src: 'https://rally1.rallydev.com/slm/attachment/14900851159/blue.png'
+    });
+
+    
+    
     this._carPanel = Ext.create('Ext.panel.Panel',{
 		layout: 'hbox',
 		height: 200,
 		itemId: 'carPanel',
 		style: 'border: 1px solid blue;',
+		items:[{
+		    xtype: 'image',
+		    autoRender: true,
+		    src: 'https://rally1.rallydev.com/slm/attachment/14899787935/road.png',
+		    width: 1000,
+		    height: 200
+		    }
+		]
 	    });
    this.add(this._carPanel);
        var container = Ext.create('Ext.Container', {
