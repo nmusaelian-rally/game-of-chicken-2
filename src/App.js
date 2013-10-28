@@ -47,6 +47,7 @@ Ext.define('CustomApp', {
     
     var scoreGrid = Ext.create('Ext.grid.Panel', {
 	title: 'Score',
+	id: 'scoreGrid',
 	store: this._scoreStore,
 	features: [{
 	    ftype: 'summary'
@@ -72,7 +73,7 @@ Ext.define('CustomApp', {
 	    }
 	],
 	height: 200,
-	width: 300,
+	width: 320,
     });
     
     var bigPanel = Ext.create('Ext.panel.Panel',{
@@ -145,7 +146,7 @@ Ext.define('CustomApp', {
         console.log("_playMyself, init this._myMovesArr",this._myMovesArray);
 	
 	this._carPanel.show();
-	
+	this._scoreStore.removeAll(); //removes data from the previous game
 	
 	this._carPanel.add(this._redCar);
 	this._carPanel.add(this._blueCar);
