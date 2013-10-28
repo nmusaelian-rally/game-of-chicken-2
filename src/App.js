@@ -62,12 +62,12 @@ Ext.define('CustomApp', {
 		}
 	    },
 	    {
-		text: 'You',
+		text: 'You (red)',
 		dataIndex: 'you',
 		summaryType: 'sum'
 	    },
 	    {
-		text: 'Player 2',
+		text: 'Player 2 (blue)',
 		dataIndex: 'player2',
 		summaryType: 'sum'
 	    }
@@ -447,9 +447,6 @@ Ext.define('CustomApp', {
                 },
                 title:{
                     text: 'The Game Of Chicken'
-                },
-                subtitle:{
-                    text: '(Results of the last game)'
                 },
                 xAxis: {
                     title: {
