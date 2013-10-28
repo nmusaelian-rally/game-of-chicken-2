@@ -29,16 +29,6 @@ Ext.define('CustomApp', {
 		]
 	    });
     
-    /*
-    Ext.define('Scorecard', {
-	extend: 'Ext.data.Model',
-	fields: [
-	    {name: 'round', type: 'int',  convert: null},
-	    {name: 'player',  type: 'string'},
-	    {name: 'score',   type: 'int', convert: null}
-	]
-    });
-    */
     
     Ext.define('Scorecard', {
 	extend: 'Ext.data.Model',
@@ -62,7 +52,14 @@ Ext.define('CustomApp', {
 	    ftype: 'summary'
 	}],
 	columns: [
-	    { text: 'Round',  dataIndex: 'round' },
+	    {
+		text: 'Round',
+		dataIndex: 'round',
+		summaryType: 'count',
+		summaryRenderer: function() {
+		    return "Total"; 
+		}
+	    },
 	    {
 		text: 'You',
 		dataIndex: 'you',
@@ -75,7 +72,7 @@ Ext.define('CustomApp', {
 	    }
 	],
 	height: 200,
-	width: 400,
+	width: 300,
     });
     
     var bigPanel = Ext.create('Ext.panel.Panel',{
@@ -86,7 +83,7 @@ Ext.define('CustomApp', {
 	    scoreGrid
 	]
     });
-   //this.add(this._carPanel);
+
    this.add(bigPanel);
    
        var container = Ext.create('Ext.Container', {
@@ -241,17 +238,6 @@ Ext.define('CustomApp', {
 		    player2: -2
 		    }
 	    );
-	    /*
-	    this._scoreStore.add(
-		{
-		    round: round,
-		    you: 2
-		},
-		{
-		    round: round,
-		    player2: -2
-		}
-	    );*/
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'keep going'))
 	
 	else if ((opponentsMove === 'keep going') && (yourMove === 'swerve')) {
@@ -292,18 +278,7 @@ Ext.define('CustomApp', {
 		    player2: 2
 		}
 	    );
-	     
-	    /*
-	    this._scoreStore.add(
-		{
-		    round: round,
-		    you: -2
-		},
-		{
-		    round: round,
-		    player2: 2
-		}
-	    );*/
+	    
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'swerve'))
 	
 	else if ((opponentsMove === 'swerve') && (yourMove === 'swerve')) {
@@ -342,19 +317,9 @@ Ext.define('CustomApp', {
 		    round: round,
 		    you: 0,
 		    player2: 0
-		    }
-	    );
-	    /*
-	    this._scoreStore.add(
-		{
-		    round: round,
-		    you: 0
-		},
-		{
-		    round: round,
-		    player2: 0
 		}
-	    );*/
+	    );
+	    
 	    
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'swerve'))
 	
@@ -395,17 +360,7 @@ Ext.define('CustomApp', {
 		    player2: -10
 		    }
 	    );
-	    /*
-	    this._scoreStore.add(
-		{
-		    round: round,
-		    you: -10
-		},
-		{
-		    round: round,
-		    player2: -10
-		}
-	    );*/
+	   
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'keep going'))
 	
     },
