@@ -22,12 +22,11 @@ Ext.define('CustomApp', {
    this._blueCar = Ext.create('Ext.Img', {
 	src: 'https://rally1.rallydev.com/slm/attachment/14900851159/blue.png'
     });
-
-    
-    
+ 
     this._carPanel = Ext.create('Ext.panel.Panel',{
 		layout: 'hbox',
 		height: 200,
+		width: 1000,
 		itemId: 'carPanel',
 		style: 'border: 1px solid blue;',
 		items:[{
@@ -39,7 +38,50 @@ Ext.define('CustomApp', {
 		    }
 		]
 	    });
-   this.add(this._carPanel);
+    
+    
+    Ext.define('Scorecard', {
+	extend: 'Ext.data.Model',
+	fields: [
+	    {name: 'round', type: 'int',  convert: null},
+	    {name: 'player',  type: 'string'},
+	    {name: 'score',   type: 'int', convert: null}
+	]
+    });
+    
+     this._scoreStore = Ext.create('Ext.data.Store', {
+	model: 'Scorecard',
+	storeId: 'scoreStore'
+    });
+
+    
+    var scoreGrid = Ext.create('Ext.grid.Panel', {
+	title: 'Score',
+	store: this._scoreStore,
+	columns: [
+	    { text: 'Round',  dataIndex: 'round' },
+	    { text: 'Player', dataIndex: 'player'},
+	    {
+		text: 'Score',
+		dataIndex: 'score',
+		summaryType: 'sum'
+	    }
+	],
+	height: 200,
+	width: 400,
+    });
+    
+    var bigPanel = Ext.create('Ext.panel.Panel',{
+	layout: 'hbox',
+	style: 'border: 1px solid red;',
+	items:[
+	    this._carPanel,
+	    scoreGrid
+	]
+    });
+   //this.add(this._carPanel);
+   this.add(bigPanel);
+   
        var container = Ext.create('Ext.Container', {
             items: [
                 {
@@ -91,7 +133,7 @@ Ext.define('CustomApp', {
         var min = 4;
         var max = min*2;
         this._numberOfRounds = Math.floor(Math.random() * (max - min + 1)) + min;
-        this._rounds = this._numberOfRounds
+        this._rounds = this._numberOfRounds;  //for chart
         console.log("this._numberOfRounds:",this._numberOfRounds);
         this._myMovesArray = [];
         this._opponentsMovesArray = [];
@@ -112,6 +154,7 @@ Ext.define('CustomApp', {
     },
     
     _move: function(move){
+	var round = this._rounds - this._numberOfRounds;
         if (this._numberOfRounds>0) {
                 //the other player's move
 		var opponentsMove = '';
@@ -139,14 +182,17 @@ Ext.define('CustomApp', {
                     this._punish = false;
                     console.log('this._punish',this._punish);
                 }
-                this._numberOfRounds--;
-		this._animate(opponentsMove, move);
+                
+		this._animate(opponentsMove, move, round);
+		
+		this._numberOfRounds--;
+		
 		if (this._numberOfRounds==0) {
 		    this._postRoundActions();
 		}
 	}
     },
-    _animate:function(opponentsMove, yourMove){
+    _animate:function(opponentsMove, yourMove, round){
 	var that = this;
 	console.log('animating...');
 	console.log(opponentsMove, yourMove);
@@ -180,7 +226,20 @@ Ext.define('CustomApp', {
 			y: 130
 		    }
 		}
-	    });   
+	    });
+	    
+	    this._scoreStore.add(
+		{
+		    player: 'You',
+		    round: round,
+		    score: 2
+		},
+		{
+		    player: 'Player 2',
+		    round: round,
+		    score: -2
+		}
+	    );
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'keep going'))
 	
 	else if ((opponentsMove === 'keep going') && (yourMove === 'swerve')) {
@@ -212,7 +271,19 @@ Ext.define('CustomApp', {
 			y: 80
 		    }
 		}
-	    });  
+	    });
+	    this._scoreStore.add(
+		{
+		    player: 'You',
+		    round: round,
+		    score: -2
+		},
+		{
+		    player: 'Player 2',
+		    round: round,
+		    score: 2
+		}
+	    );
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'swerve'))
 	
 	else if ((opponentsMove === 'swerve') && (yourMove === 'swerve')) {
@@ -245,7 +316,18 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    
+	    this._scoreStore.add(
+		{
+		    player: 'You',
+		    round: round,
+		    score: 0
+		},
+		{
+		    player: 'Player 2',
+		    round: round,
+		    score: 0
+		}
+	    );
 	    
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'swerve'))
 	
@@ -258,7 +340,7 @@ Ext.define('CustomApp', {
 			y:70
 		    },
 		    '100%': {
-			x: 400,  //650
+			x: 400, 
 			y:70
 		    }
 		}
@@ -274,11 +356,23 @@ Ext.define('CustomApp', {
 			y:70
 		    },
 		    '50%': {
-			x: 520, //550
+			x: 520,
 			y: 70
 		    }
 		}
-	    }); 
+	    });
+	    this._scoreStore.add(
+		{
+		    player: 'You',
+		    round: round,
+		    score: -10
+		},
+		{
+		    player: 'Player 2',
+		    round: round,
+		    score: -10
+		}
+	    );
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'keep going'))
 	
     },
