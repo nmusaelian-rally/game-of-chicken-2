@@ -330,11 +330,11 @@ Ext.define('CustomApp', {
 		keyframes: {
 		    '0%': {
 			x:20,
-			y:70
+			y:80
 		    },
 		    '100%': {
 			x: 400, 
-			y:70
+			y:80
 		    }
 		}
 	    });
@@ -346,11 +346,11 @@ Ext.define('CustomApp', {
 		keyframes: {
 		    '0%': {
 			x:1000,
-			y:70
+			y:80
 		    },
 		    '50%': {
 			x: 520,
-			y: 70
+			y: 80
 		    }
 		}
 	    });
@@ -417,17 +417,15 @@ Ext.define('CustomApp', {
         }
         this._series.push({
                             name: playersArr[0],
-                            data: this._data[0],
-                        color: 'rgba(223, 83, 83, .5)'
+                            data: this._data[0]
                                 })
         this._series.push({
                             name: playersArr[1],
-                            data: this._data[1],
-                        color: 'rgba(119, 152, 191, .5)'
+                            data: this._data[1]
                                 })
         
         console.log("_series", this._series);
-        //this._updateChart();
+	
 	this._makeChart();
         
     },
@@ -441,6 +439,7 @@ Ext.define('CustomApp', {
             },
             id: 'chart',
             width: 600,
+	    chartColors: ['#FF3333','#3399FF'], //red & blue
             chartConfig: {
                 chart:{
                 type: 'scatter',
