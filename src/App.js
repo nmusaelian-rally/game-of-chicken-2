@@ -29,13 +29,23 @@ Ext.define('CustomApp', {
 		]
 	    });
     
-    
+    /*
     Ext.define('Scorecard', {
 	extend: 'Ext.data.Model',
 	fields: [
 	    {name: 'round', type: 'int',  convert: null},
 	    {name: 'player',  type: 'string'},
 	    {name: 'score',   type: 'int', convert: null}
+	]
+    });
+    */
+    
+    Ext.define('Scorecard', {
+	extend: 'Ext.data.Model',
+	fields: [
+	    {name: 'round', type: 'int',  convert: null},
+	    {name: 'you',   type: 'int', convert: null},
+	    {name: 'player2',   type: 'int', convert: null}
 	]
     });
     
@@ -48,12 +58,19 @@ Ext.define('CustomApp', {
     var scoreGrid = Ext.create('Ext.grid.Panel', {
 	title: 'Score',
 	store: this._scoreStore,
+	features: [{
+	    ftype: 'summary'
+	}],
 	columns: [
 	    { text: 'Round',  dataIndex: 'round' },
-	    { text: 'Player', dataIndex: 'player'},
 	    {
-		text: 'Score',
-		dataIndex: 'score',
+		text: 'You',
+		dataIndex: 'you',
+		summaryType: 'sum'
+	    },
+	    {
+		text: 'Player 2',
+		dataIndex: 'player2',
 		summaryType: 'sum'
 	    }
 	],
@@ -217,19 +234,24 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    
+	     this._scoreStore.add(
+		{
+		    round: round,
+		    you: 2,
+		    player2: -2
+		    }
+	    );
+	    /*
 	    this._scoreStore.add(
 		{
-		    player: 'You',
 		    round: round,
-		    score: 2
+		    you: 2
 		},
 		{
-		    player: 'Player 2',
 		    round: round,
-		    score: -2
+		    player2: -2
 		}
-	    );
+	    );*/
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'keep going'))
 	
 	else if ((opponentsMove === 'keep going') && (yourMove === 'swerve')) {
@@ -262,18 +284,26 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
-	    this._scoreStore.add(
+	    
+	     this._scoreStore.add(
 		{
-		    player: 'You',
 		    round: round,
-		    score: -2
-		},
-		{
-		    player: 'Player 2',
-		    round: round,
-		    score: 2
+		    you: -2,
+		    player2: 2
 		}
 	    );
+	     
+	    /*
+	    this._scoreStore.add(
+		{
+		    round: round,
+		    you: -2
+		},
+		{
+		    round: round,
+		    player2: 2
+		}
+	    );*/
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'swerve'))
 	
 	else if ((opponentsMove === 'swerve') && (yourMove === 'swerve')) {
@@ -306,18 +336,25 @@ Ext.define('CustomApp', {
 		    }
 		}
 	    });
+	    
+	     this._scoreStore.add(
+		{
+		    round: round,
+		    you: 0,
+		    player2: 0
+		    }
+	    );
+	    /*
 	    this._scoreStore.add(
 		{
-		    player: 'You',
 		    round: round,
-		    score: 0
+		    you: 0
 		},
 		{
-		    player: 'Player 2',
 		    round: round,
-		    score: 0
+		    player2: 0
 		}
-	    );
+	    );*/
 	    
 	} //end of if ((opponentsMove === 'swerve') && (yourMove === 'swerve'))
 	
@@ -353,16 +390,22 @@ Ext.define('CustomApp', {
 	    });
 	    this._scoreStore.add(
 		{
-		    player: 'You',
 		    round: round,
-		    score: -10
+		    you: -10,
+		    player2: -10
+		    }
+	    );
+	    /*
+	    this._scoreStore.add(
+		{
+		    round: round,
+		    you: -10
 		},
 		{
-		    player: 'Player 2',
 		    round: round,
-		    score: -10
+		    player2: -10
 		}
-	    );
+	    );*/
 	} //end of if ((opponentsMove === 'keep going') && (yourMove === 'keep going'))
 	
     },
